@@ -29,7 +29,7 @@ with st.sidebar:
   uploaded_files = st.file_uploader("Upload your PDF documents", type="pdf", accept_multiple_files=True)
   if st.button("Process Documents"):
     if uploaded_files:
-      with st.spinner{"Processing documents..."):
+      with st.spinner("Processing documents..."):
           docs = []
       for file in uploaded_files:
       #To read the file, we first write it to a temporary file
@@ -57,15 +57,15 @@ prompt = ChatPromptTemplate.from_template(
   Answer the questions based on the provided context only.
   Please provide the most accurate response based on the question.
   <context>
-  {context}
+  <context>
   <context>
   Questions:{input}
   """
 )
 #display previous chat messages
 for message in st.session_state.chat_history:
-    with st.chat message(message["role")):
-        st.markdown(message("content"])
+    with st.chat message(message["role"]):
+        st.markdown(message("content"))
                     
 #Get user input
 if prompt_input := st.chat_input("Ask a question about your documents..."):
@@ -87,6 +87,6 @@ if prompt_input := st.chat_input("Ask a question about your documents..."):
               st.markdown(response['answer'])
               st.infolf Response time: (response_time:.21) seconds")
 
-            st.session_state.chat_history.append({"role": "assistant", "content": response("answer"]])
+            st.session_state.chat_history.append({"role": "assistant", "content": response("answer")})
     else:
         st.warning("Please process your documents before asking questions.")
