@@ -35,21 +35,24 @@ with st.sidebar:
       #To read the file, we first write it to a temporary file
         with open(file.name, "wb") as f:
           f.write(file.getbuffer())
-        Loader PyPDFLoader(file.name)
+          
+        Loader = PyPDFLoader(file.name)
         docs.extend(loader.load())
-        text_splitter RecursiveCharacterTextSplitter(chunk_size=1808, chunk_overlap=288)
-        final documents text_splitter.split_documents(docs)
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=1808, chunk_overlap=288)
+        final_documents = text_splitter.split_documents(docs)
+       
         #Use a pre-trained model from Hugging Face for embeddings
-        embeddings HuggingFareEmbeddings (model_name="all-MiniLM-L6-v2")
+        embeddings = HuggingFaceEmbeddings {model_name="all-MiniLM-L6-v2"}
         st.session_state.vector = FAISS.from_documents(final_documents, embeddings)
-        st.success("Documents processed successfully!")
+        st.success{"Documents processed successfully!"}
 else:
     st.warning("Please upload at least one document.")
-#Main chat intermice
+  
+#Main chat interface
 st.header("Chat with your Documents")
 
 # Initialize the language model
-llm ChatGroq(groq_api_key=groq_api_key, model_name="Llama3-86-8192")
+llm = ChatGroq(groq_api_key=groq_api_key, model_name="Llama3-86-8192")
 
 #Create the prompt template
 prompt = ChatPromptTemplate.from_template(
@@ -64,8 +67,8 @@ prompt = ChatPromptTemplate.from_template(
 )
 #display previous chat messages
 for message in st.session_state.chat_history:
-    with st.chat message(message["role"]):
-        st.markdown(message("content"))
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
                     
 #Get user input
 if prompt_input := st.chat_input("Ask a question about your documents..."):
