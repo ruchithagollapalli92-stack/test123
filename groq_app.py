@@ -85,7 +85,7 @@ if prompt_input := st.chat_input("Ask a question about your documents..."):
             response_time time.process_time() - start
             with st.chat_message("assistant"):
               st.markdown(response['answer'])
-              st.infolf Response time: (response_time:.21) seconds")
+              st.infolf Response time: ("response_time:.21 seconds")
 
             st.session_state.chat_history.append({"role": "assistant", "content": response("answer")})
     else:
